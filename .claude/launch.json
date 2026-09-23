@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "raspisan",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/run/media/l1tv1n/Proj/AI/projects/raspisan/server.py"],
+      "port": 8090
+    }
+  ]
+}

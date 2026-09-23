@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Расписание">
+<meta name="theme-color" content="#372579">
+<meta name="description" content="Расписание занятий студентов СКФ МТУСИ: группы, преподаватели, аудитории, замены">
+<title>Расписание — СКФ МТУСИ</title>
+<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="sp-logo-svg logo-slot"></div>
+  <div class="sp-title">Расписание</div>
+  <div class="sp-sub">СКФ МТУСИ · занятия и замены</div>
+  <div class="sp-bar"><div class="sp-fill"></div></div>
+</div>
+
+<div id="app">
+
+<!-- ══ HOME ══ -->
+<div id="sh" class="scr on">
+  <canvas id="particles"></canvas>
+  <div class="h-top">
+    <div class="h-logo-svg logo-slot"></div>
+    <div class="h-badge"><span>📅</span><span>СКФ МТУСИ</span></div>
+    <div class="h-title">Мои<em>Пары</em></div>
+    <div class="h-sub">Расписание занятий студентов: группы, преподаватели, аудитории и замены — в одном месте</div>
+    <div class="h-method">
+      <div class="h-mic">🗓</div>
+      <div class="h-mtx"><b id="h-week">Загрузка…</b><span id="h-sem"></span></div>
+    </div>
+    <div class="chips" id="h-recent"></div>
+  </div>
+  <div class="h-bot">
+    <div class="srow">
+      <div class="s1"><div class="sn" id="st-groups">–</div><div class="sl">групп</div></div>
+      <div class="s1"><div class="sn" id="st-teachers">–</div><div class="sl">преподавателей</div></div>
+      <div class="s1"><div class="sn" id="st-rooms">–</div><div class="sl">аудиторий</div></div>
+    </div>
+    <div class="seg" id="h-mode" role="tablist">
+      <button class="seg-b on" data-mode="group" role="tab">Группа</button>
+      <button class="seg-b" data-mode="teacher" role="tab">Преподаватель</button>
+      <button class="seg-b" data-mode="room" role="tab">Аудитория</button>
+    </div>
+    <input class="h-inp" id="h-q" type="search" placeholder="Например, ИКТ-21" autocomplete="off" aria-label="Поиск">
+    <div class="h-res" id="h-res"></div>
+  </div>
+</div>
+
+<!-- ══ SCHEDULE ══ -->
+<div id="ss" class="scr">
+  <div class="s-hdr">
+    <div class="s-top">
+      <button class="back" data-back aria-label="Назад">←</button>
+      <div class="s-acts">
+        <button class="ic-btn" id="s-fav" title="В избранное" aria-label="В избранное">☆</button>
+        <a class="ic-btn" id="s-ics" title="Экспорт в календарь (.ics)" aria-label="Экспорт в календарь">⤓</a>
+        <button class="ic-btn" id="s-share" title="Скопировать ссылку" aria-label="Скопировать ссылку">🔗</button>
+        <button class="ic-btn" id="s-print" title="Печать" aria-label="Печать">🖨</button>
+      </div>
+    </div>
+    <div class="s-prof">
+      <div class="s-emo" id="s-emo">👥</div>
+      <div class="s-info">
+        <div class="s-pl" id="s-kind">Группа</div>
+        <div class="s-pn" id="s-title">—</div>
+        <div class="s-pt" id="s-sub"></div>
+      </div>
+    </div>
+    <div class="wk-bar">
+      <button class="wk-nav" id="wk-prev" aria-label="Предыдущая неделя">‹</button>
+      <div class="wk-mid">
+        <span class="pts-badge" id="wk-parity">—</span>
+        <span class="wk-range" id="wk-range"></span>
+      </div>
+      <button class="wk-today" id="wk-today">Сегодня</button>
+      <button class="wk-nav" id="wk-next" aria-label="Следующая неделя">›</button>
+    </div>
+    <div class="dpills" id="dpills"></div>
+  </div>
+  <div class="s-scr" id="s-body"></div>
+</div>
+
+<!-- ══ ADMIN ══ -->
+<div id="sa" class="scr">
+  <div class="n-hdr">
+    <div class="s-top">
+      <button class="back" data-back aria-label="Назад">←</button>
+      <button class="ic-btn wide hidden" id="a-logout">Выйти</button>
+    </div>
+    <h2>Панель администратора</h2>
+    <p id="a-subtitle">Управление расписанием, заменами и справочниками</p>
+    <div class="a-tabs hidden" id="a-tabs"></div>
+  </div>
+  <div class="n-body" id="a-body"></div>
+</div>
+
+<!-- SHEET (формы, подтверждения) -->
+<div id="sheet-bg"></div>
+<div id="sheet" role="dialog" aria-modal="true">
+  <div class="sheet-grip"></div>
+  <div id="sheet-in"></div>
+</div>
+
+<div id="toast"></div>
+</div>
+
+<!-- Печатная версия -->
+<div id="print-doc"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>

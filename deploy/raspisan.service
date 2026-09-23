@@ -1,0 +1,26 @@
+[Unit]
+Description=Расписание СКФ МТУСИ
+After=network.target
+
+[Service]
+User=raspisan
+Group=raspisan
+WorkingDirectory=/opt/raspisan
+Environment=RASPISAN_HOST=127.0.0.1
+Environment=RASPISAN_PORT=8090
+Environment=RASPISAN_DB=/var/lib/raspisan/raspisan.db
+# пароль админки — RASPISAN_ADMIN_PASSWORD, генерируется setup.sh
+EnvironmentFile=/etc/raspisan.env
+ExecStart=/usr/bin/python3 /opt/raspisan/server.py
+Restart=always
+RestartSec=3
+
+# сервису нужна только своя база, остальное — только чтение
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/raspisan
+
+[Install]
+WantedBy=multi-user.target
